@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
 
 class Contact extends Model
 {
+    use Filterable;
+
     protected $fillable = [
         'first_name',
         'last_name',
