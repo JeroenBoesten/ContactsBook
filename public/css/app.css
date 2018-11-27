@@ -15853,7 +15853,7 @@ body {
 
 .centered-box {
   width: 100%;
-  max-width: 50%;
+  max-width: 750px;
   padding: 15px;
   margin: auto;
 }
