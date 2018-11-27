@@ -11,6 +11,5 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/contacts', 301);
+Route::resource('/contacts', 'ContactController')->except(['show']);
