@@ -8,6 +8,14 @@ Much like a “Contacts” application on your phone, this application should le
 
 ##Demo
 Want to see this application in action? Without the hassle of installing it yourself? Visit: [contactsbook.jeroenboesten.nl](https://contactsbook.jeroenboesten.nl)
+
+##Techniques
+The application uses Laravel Framework (A php based framework) for the back end, for example; server side validation, database connection, database migrations, routes etc.
+
+For the frontend it uses vue.js to create a single page experience and interactive feeling. 
+Styling is done based on Bootstrap 4, and to compile and version everything webpack used under the hood. 
+To have easy webpack configuration Laravel provides defaults in it's Laravel Mix.
+
 ##Installation
 To install this application for yourself, follow instructions below.
 1. Clone repository in folder
