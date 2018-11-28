@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="input-group mb-4">
-            <input placeholder="Zoeken... (Voornaam, Achternaam, Telefoonnummer, Twitter, Email)" name="search" type="text" class="form-control" v-model="search">
+            <input placeholder="Search..." name="search" type="text" class="form-control" v-model="search">
             <select class="form-control" v-model="sort">
                 <option value="">Sort by Alphabet</option>
                 <option value="date">Sort by date added</option>

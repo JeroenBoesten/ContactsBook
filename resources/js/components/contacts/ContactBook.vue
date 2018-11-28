@@ -16,6 +16,11 @@
             <contact-filter v-on:contactsChanged="dataChange"></contact-filter>
             <contact-table :contacts="contacts" v-on:contactsChanged="dataChange"></contact-table>
         </div>
+        <div class="card-footer">
+            <small>
+                This application was developed as a developer case, more information: <a href="https://bitbucket.org/JeroenOnline/contactsbook/src" target="_blank">Bitbucket repo</a>.
+            </small>
+        </div>
     </div>
 </template>
 <script>
