@@ -12,4 +12,4 @@
 */
 
 Route::redirect('/', '/contacts', 301);
-Route::resource('/contacts', 'ContactController')->except(['show']);
+Route::resource('/contacts', 'ContactController')->except(['show', 'create', 'edit']);

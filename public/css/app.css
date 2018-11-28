@@ -15858,3 +15858,7 @@ body {
   margin: auto;
 }
 
+.ucfirst:first-letter {
+  text-transform: capitalize;
+}
+
