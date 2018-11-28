@@ -12,10 +12,9 @@
                         :show="showCreateContact"
                         v-on:showModal="showCreateContact = value"
                         v-on:contactsChanged="dataChange">
-
             </form-modal>
             <contact-filter v-on:contactsChanged="dataChange"></contact-filter>
-            <contact-table :contacts="contacts"></contact-table>
+            <contact-table :contacts="contacts" v-on:contactsChanged="dataChange"></contact-table>
         </div>
     </div>
 </template>

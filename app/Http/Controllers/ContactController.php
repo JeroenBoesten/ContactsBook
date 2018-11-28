@@ -53,13 +53,24 @@ class ContactController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param ContactRequest|Request $request
+     * @param Contact $contact
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function update(Request $request, $id)
+    public function update(ContactRequest $request, Contact $contact)
     {
-        //
+        $contact->update($request->validated());
+
+        if (request()->ajax()) {
+            $contacts = json_encode(Contact::filter($request->all())->get()->sortBy('last_name')->groupBy(function ($item, $key) {
+                return substr($item['last_name'], 0, 1);
+            }));
+
+            return $contacts;
+        }
+
+        return redirect()->route('contacts.index');
     }
 
     /**

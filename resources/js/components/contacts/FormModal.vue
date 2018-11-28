@@ -138,15 +138,31 @@
         created() {
             if (this.contactData) {
                 this.contact = this.contactData;
+
+                if(this.contact.phone_number) {
+                    this.showPhoneNumber = true;
+                }
+                if(this.contact.email) {
+                    this.showEmail = true;
+                }
+                if(this.contact.twitter) {
+                    this.showTwitter = true;
+                }
             }
         },
         methods: {
             async save() {
                 /** Update existing contact */
                 if (this.contact.id) {
-                    console.log("Update method to be implemented");
-
-                    /** Create new contact */
+                    try {
+                        const response = await axios.patch(`/contacts/${this.contact.id}`, this.contact);
+                        this.errors = {};
+                        this.$emit('showModal', false);
+                        this.$emit('contactsChanged', response.data);
+                    } catch (e) {
+                        this.errors = e.response.data.errors;
+                    }
+                /** Create new contact */
                 } else {
                     try {
                         const response = await axios.post('/contacts', this.contact);

@@ -1769,7 +1769,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
@@ -2033,35 +2032,63 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     created: function created() {
         if (this.contactData) {
             this.contact = this.contactData;
+
+            if (this.contact.phone_number) {
+                this.showPhoneNumber = true;
+            }
+            if (this.contact.email) {
+                this.showEmail = true;
+            }
+            if (this.contact.twitter) {
+                this.showTwitter = true;
+            }
         }
     },
 
     methods: {
         save: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-                var response;
+                var response, _response;
+
                 return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
                                 if (!this.contact.id) {
-                                    _context.next = 4;
+                                    _context.next = 15;
                                     break;
                                 }
 
-                                console.log("Update method to be implemented");
-
-                                /** Create new contact */
-                                _context.next = 17;
-                                break;
+                                _context.prev = 1;
+                                _context.next = 4;
+                                return axios.patch('/contacts/' + this.contact.id, this.contact);
 
                             case 4:
-                                _context.prev = 4;
-                                _context.next = 7;
+                                response = _context.sent;
+
+                                this.errors = {};
+                                this.$emit('showModal', false);
+                                this.$emit('contactsChanged', response.data);
+                                _context.next = 13;
+                                break;
+
+                            case 10:
+                                _context.prev = 10;
+                                _context.t0 = _context['catch'](1);
+
+                                this.errors = _context.t0.response.data.errors;
+
+                            case 13:
+                                _context.next = 28;
+                                break;
+
+                            case 15:
+                                _context.prev = 15;
+                                _context.next = 18;
                                 return axios.post('/contacts', this.contact);
 
-                            case 7:
-                                response = _context.sent;
+                            case 18:
+                                _response = _context.sent;
 
                                 this.errors = {};
                                 this.contact = {
@@ -2073,22 +2100,22 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                                     twitter: ''
                                 };
                                 this.$emit('showModal', false);
-                                this.$emit('contactsChanged', response.data);
-                                _context.next = 17;
+                                this.$emit('contactsChanged', _response.data);
+                                _context.next = 28;
                                 break;
 
-                            case 14:
-                                _context.prev = 14;
-                                _context.t0 = _context['catch'](4);
+                            case 25:
+                                _context.prev = 25;
+                                _context.t1 = _context['catch'](15);
 
-                                this.errors = _context.t0.response.data.errors;
+                                this.errors = _context.t1.response.data.errors;
 
-                            case 17:
+                            case 28:
                             case 'end':
                                 return _context.stop();
                         }
                     }
-                }, _callee, this, [[4, 14]]);
+                }, _callee, this, [[1, 10], [15, 25]]);
             }));
 
             function save() {
@@ -2203,6 +2230,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FormModal_vue__ = __webpack_require__("./resources/js/components/contacts/FormModal.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FormModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__FormModal_vue__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2227,7 +2261,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        FormModal: __WEBPACK_IMPORTED_MODULE_0__FormModal_vue___default.a
+    },
     props: {
         contact: {
             type: Object,
@@ -2237,6 +2275,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             type: Number,
             required: true
         }
+    },
+
+    data: function data() {
+        return {
+            showEditModal: false
+        };
     }
 });
 
@@ -37791,7 +37835,10 @@ var render = function() {
         _vm._v(" "),
         _c("contact-filter", { on: { contactsChanged: _vm.dataChange } }),
         _vm._v(" "),
-        _c("contact-table", { attrs: { contacts: _vm.contacts } })
+        _c("contact-table", {
+          attrs: { contacts: _vm.contacts },
+          on: { contactsChanged: _vm.dataChange }
+        })
       ],
       1
     )
@@ -38643,21 +38690,43 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(0)
+    _c(
+      "td",
+      { staticClass: "align-middle text-right" },
+      [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-secondary",
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                _vm.showEditModal = true
+              }
+            }
+          },
+          [_c("i", { staticClass: "fas fa-pencil-alt" })]
+        ),
+        _vm._v(" "),
+        _c("form-modal", {
+          attrs: {
+            "contact-data": _vm.contact,
+            title:
+              "Edit " + _vm.contact.first_name + " " + _vm.contact.last_name,
+            show: _vm.showEditModal
+          },
+          on: {
+            showModal: function($event) {
+              _vm.showEditModal = _vm.value
+            }
+          }
+        })
+      ],
+      1
+    )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "align-middle text-right" }, [
-      _c("button", { staticClass: "btn btn-secondary" }, [
-        _c("i", { staticClass: "fas fa-pencil-alt" })
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

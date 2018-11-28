@@ -17,12 +17,21 @@
                 </div>
             </td>
             <td class="align-middle text-right">
-                <button class="btn btn-secondary"><i class="fas fa-pencil-alt"></i></button>
+                <button class="btn btn-secondary" v-on:click.prevent="showEditModal = true"><i class="fas fa-pencil-alt"></i></button>
+                <form-modal :contact-data="contact"
+                            :title="`Edit ${contact.first_name} ${contact.last_name}`"
+                            :show="showEditModal"
+                            v-on:showModal="showEditModal = value">
+                </form-modal>
             </td>
         </tr>
 </template>
 <script>
+    import FormModal from './FormModal.vue';
     export default {
+        components: {
+            FormModal,
+        },
         props: {
             contact: {
                 type: Object,
@@ -32,6 +41,12 @@
                 type: Number,
                 required: true,
             },
+        },
+
+        data() {
+            return {
+                showEditModal: false,
+            }
         },
     }
 </script>
