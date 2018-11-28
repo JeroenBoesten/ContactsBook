@@ -1824,11 +1824,16 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            search: ''
+            search: '',
+            sort: ''
         };
     },
 
@@ -1842,7 +1847,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                             case 0:
                                 _context.prev = 0;
                                 _context.next = 3;
-                                return axios.get('/contacts?search=' + encodeURI(this.search));
+                                return axios.get('/contacts?search=' + encodeURI(this.search) + '&sort=' + encodeURI(this.sort));
 
                             case 3:
                                 response = _context.sent;
@@ -1874,6 +1879,9 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     },
     watch: {
         search: function search() {
+            this.filter();
+        },
+        sort: function sort() {
             this.filter();
         }
     }
@@ -38542,6 +38550,43 @@ var render = function() {
           }
         }
       }),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.sort,
+              expression: "sort"
+            }
+          ],
+          staticClass: "form-control",
+          on: {
+            change: function($event) {
+              var $$selectedVal = Array.prototype.filter
+                .call($event.target.options, function(o) {
+                  return o.selected
+                })
+                .map(function(o) {
+                  var val = "_value" in o ? o._value : o.value
+                  return val
+                })
+              _vm.sort = $event.target.multiple
+                ? $$selectedVal
+                : $$selectedVal[0]
+            }
+          }
+        },
+        [
+          _c("option", { attrs: { value: "" } }, [_vm._v("Sort by Alphabet")]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "date" } }, [
+            _vm._v("Sort by date added")
+          ])
+        ]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "input-group-append" }, [
         _c("input", {

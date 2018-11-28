@@ -17,9 +17,8 @@ class ContactController extends Controller
     public function index(Request $request)
     {
         /** @var $contacts Contact Grouped collection of contacts by first letter of last name */
-        $contacts = json_encode(Contact::filter($request->all())->get()->sortBy('last_name')->groupBy(function ($item, $key) {
-            return substr($item['last_name'], 0, 1);
-        }));
+        $contacts = $this->getContacts();
+
 
         /** If the request is an ajax call, no view returned only contacts */
         if (request()->ajax()) {
@@ -40,11 +39,7 @@ class ContactController extends Controller
         $contact = Contact::create($request->validated());
 
         if (request()->ajax()) {
-            $contacts = json_encode(Contact::filter($request->all())->get()->sortBy('last_name')->groupBy(function ($item, $key) {
-                return substr($item['last_name'], 0, 1);
-            }));
-
-            return $contacts;
+            return $this->getContacts();
         }
 
         return redirect()->route('contacts.index');
@@ -63,11 +58,7 @@ class ContactController extends Controller
         $contact->update($request->validated());
 
         if (request()->ajax()) {
-            $contacts = json_encode(Contact::filter($request->all())->get()->sortBy('last_name')->groupBy(function ($item, $key) {
-                return substr($item['last_name'], 0, 1);
-            }));
-
-            return $contacts;
+            return $this->getContacts();
         }
 
         return redirect()->route('contacts.index');
@@ -76,11 +67,34 @@ class ContactController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param Contact $contact
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function destroy($id)
+    public function destroy(Contact $contact)
     {
-        //
+        if (request()->ajax()) {
+            return $this->getContacts();
+        }
+
+        return redirect()->route('contacts.index');
+    }
+
+    /**
+     * @return Contact Returns the contacts
+     */
+    protected function getContacts()
+    {
+        if(request()->has('sort') && request()->input('sort') == 'date') {
+            $contacts = json_encode(Contact::filter(request()->all())->get()->sortByDesc('created_at')->groupBy(function ($item, $key) {
+                return $item['created_at']->format('d-m-Y');
+            }));
+        }else {
+            $contacts = json_encode(Contact::filter(request()->all())->get()->sortBy('last_name')->groupBy(function ($item, $key) {
+                return substr($item['last_name'], 0, 1);
+            }));
+        }
+
+        return $contacts;
     }
 }
