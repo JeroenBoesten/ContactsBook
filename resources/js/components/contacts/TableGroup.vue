@@ -11,6 +11,7 @@
                    :contact="contact"
                    :index="index"
                    ref="table-row"
+                   v-on:contactsChanged="passEventUp"
                    :key="`contact_row[${index}]`">
         </table-row>
         </tbody>
@@ -31,6 +32,11 @@
             index: {
                 type: String,
                 required: true,
+            },
+        },
+        methods: {
+            passEventUp(value) {
+                this.$emit('contactsChanged', value);
             },
         },
     }

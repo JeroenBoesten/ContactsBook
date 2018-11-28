@@ -33,4 +33,20 @@ class Contact extends Model
         return "https://www.gravatar.com/avatar/". $hash ."?s=". (int)$size ."&d=mp";
     }
 
+    /**
+     * @param String $value
+     * Make sure firstname always has capital letter at the start
+     */
+    public function setFirstNameAttribute($value)
+    {
+        $this->attributes['first_name'] = ucfirst($value);
+    }
+    /**
+     * @param String $value
+     * Make sure lastname always has capital letter at the start
+     */
+    public function setLastNameAttribute($value)
+    {
+        $this->attributes['last_name'] = ucfirst($value);
+    }
 }

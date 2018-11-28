@@ -4,7 +4,8 @@
                      :contactsGroup="group"
                      :index="index"
                      ref="table-group"
-                     :key="`contact_group[${index}]`">
+                     :key="`contact_group[${index}]`"
+                     v-on:contactsChanged="passEventUp">
         </table-group>
     </div>
 </template>
@@ -19,6 +20,11 @@
                 type: Object,
                 required: true,
             }
-        }
+        },
+        methods: {
+            passEventUp(value) {
+                this.$emit('contactsChanged', value);
+            },
+        },
     }
 </script>

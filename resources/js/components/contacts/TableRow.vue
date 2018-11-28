@@ -17,11 +17,15 @@
                 </div>
             </td>
             <td class="align-middle text-right">
-                <button class="btn btn-secondary" v-on:click.prevent="showEditModal = true"><i class="fas fa-pencil-alt"></i></button>
+                <div class="btn-group">
+                    <button class="btn btn-secondary" v-on:click.prevent="showEditModal = true"><i class="fas fa-pencil-alt"></i></button>
+                    <button class="btn btn-danger" v-on:click.prevent="destroy()"><i class="fas fa-trash-alt"></i></button>
+                </div>
                 <form-modal :contact-data="contact"
                             :title="`Edit ${contact.first_name} ${contact.last_name}`"
                             :show="showEditModal"
-                            v-on:showModal="showEditModal = value">
+                            v-on:showModal="showEditModal = value"
+                            v-on:contactsChanged="passEventUp">
                 </form-modal>
             </td>
         </tr>
@@ -48,5 +52,19 @@
                 showEditModal: false,
             }
         },
+        methods: {
+            async destroy() {
+                try {
+                    const response = await axios.delete(`/contacts/${this.contact.id}`);
+                    this.$emit('contactsChanged', response.data);
+                } catch (e) {
+                    console.log(e);
+                }
+            },
+            passEventUp(value) {
+                this.$emit('contactsChanged', value);
+            },
+        },
+
     }
 </script>

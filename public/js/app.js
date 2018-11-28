@@ -2171,6 +2171,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2181,6 +2182,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         contacts: {
             type: Object,
             required: true
+        }
+    },
+    methods: {
+        passEventUp: function passEventUp(value) {
+            this.$emit('contactsChanged', value);
         }
     }
 });
@@ -2194,6 +2200,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__TableRow__ = __webpack_require__("./resources/js/components/contacts/TableRow.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__TableRow___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__TableRow__);
+//
 //
 //
 //
@@ -2228,6 +2235,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             type: String,
             required: true
         }
+    },
+    methods: {
+        passEventUp: function passEventUp(value) {
+            this.$emit('contactsChanged', value);
+        }
     }
 });
 
@@ -2238,8 +2250,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FormModal_vue__ = __webpack_require__("./resources/js/components/contacts/FormModal.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FormModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__FormModal_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__("./node_modules/babel-runtime/regenerator/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FormModal_vue__ = __webpack_require__("./resources/js/components/contacts/FormModal.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FormModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__FormModal_vue__);
+
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+//
+//
+//
+//
 //
 //
 //
@@ -2272,7 +2294,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
-        FormModal: __WEBPACK_IMPORTED_MODULE_0__FormModal_vue___default.a
+        FormModal: __WEBPACK_IMPORTED_MODULE_1__FormModal_vue___default.a
     },
     props: {
         contact: {
@@ -2289,7 +2311,52 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             showEditModal: false
         };
+    },
+
+    methods: {
+        destroy: function () {
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+                var response;
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                    while (1) {
+                        switch (_context.prev = _context.next) {
+                            case 0:
+                                _context.prev = 0;
+                                _context.next = 3;
+                                return axios.delete('/contacts/' + this.contact.id);
+
+                            case 3:
+                                response = _context.sent;
+
+                                this.$emit('contactsChanged', response.data);
+                                _context.next = 10;
+                                break;
+
+                            case 7:
+                                _context.prev = 7;
+                                _context.t0 = _context['catch'](0);
+
+                                console.log(_context.t0);
+
+                            case 10:
+                            case 'end':
+                                return _context.stop();
+                        }
+                    }
+                }, _callee, this, [[0, 7]]);
+            }));
+
+            function destroy() {
+                return _ref.apply(this, arguments);
+            }
+
+            return destroy;
+        }(),
+        passEventUp: function passEventUp(value) {
+            this.$emit('contactsChanged', value);
+        }
     }
+
 });
 
 /***/ }),
@@ -37776,7 +37843,8 @@ var render = function() {
           key: "contact_row[" + index + "]",
           ref: "table-row",
           refInFor: true,
-          attrs: { contact: contact, index: index }
+          attrs: { contact: contact, index: index },
+          on: { contactsChanged: _vm.passEventUp }
         })
       })
     )
@@ -38630,7 +38698,8 @@ var render = function() {
         key: "contact_group[" + index + "]",
         ref: "table-group",
         refInFor: true,
-        attrs: { contactsGroup: group, index: index }
+        attrs: { contactsGroup: group, index: index },
+        on: { contactsChanged: _vm.passEventUp }
       })
     })
   )
@@ -38739,19 +38808,35 @@ var render = function() {
       "td",
       { staticClass: "align-middle text-right" },
       [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-secondary",
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                _vm.showEditModal = true
+        _c("div", { staticClass: "btn-group" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-secondary",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  _vm.showEditModal = true
+                }
               }
-            }
-          },
-          [_c("i", { staticClass: "fas fa-pencil-alt" })]
-        ),
+            },
+            [_c("i", { staticClass: "fas fa-pencil-alt" })]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-danger",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  _vm.destroy()
+                }
+              }
+            },
+            [_c("i", { staticClass: "fas fa-trash-alt" })]
+          )
+        ]),
         _vm._v(" "),
         _c("form-modal", {
           attrs: {
@@ -38763,7 +38848,8 @@ var render = function() {
           on: {
             showModal: function($event) {
               _vm.showEditModal = _vm.value
-            }
+            },
+            contactsChanged: _vm.passEventUp
           }
         })
       ],
