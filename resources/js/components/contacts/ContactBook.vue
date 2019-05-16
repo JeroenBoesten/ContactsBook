@@ -18,7 +18,7 @@
         </div>
         <div class="card-footer">
             <small>
-                This application was developed as a developer case, more information: <a href="https://bitbucket.org/JeroenOnline/contactsbook/src" target="_blank">Bitbucket repo</a>.
+                This application was developed as a developer case, more information: <a href="https://github.com/JeroenBoesten/ContactsBook" target="_blank">GitHub repo</a>.
             </small>
         </div>
     </div>
